@@ -1,28 +1,29 @@
 const express = require('express');
-// const volume = require('./my-modules/pyramid');
+const handlebars = require('express-handlebars');
 
-const messageListTemplate = require('./templates/message-list.template');
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
+app.engine('handlebars', handlebars());
+app.set('view engine', 'handlebars');
+
+app.use(express.urlencoded({extended: true}));
 
 const messages = [];
 
 app.get('/', (request, response) => {
-    response.send(messageListTemplate(messages));
+    response.render('home', {messages: messages});
 });
 
-app.post('/', (request, response) => {
-    console.log('a', request.body.author);
-    console.log('b', request.body.text);
+app.post('/new', (request, response) => {
 
     messages.push({
-       author : request.body.author,
-       text: request.body.text
+        author: request.body.author,
+        text: request.body.text,
+        date: new Date()
     });
-
-    response.send(messageListTemplate(messages));
+    response.redirect('/');
 });
+
 
 app.use(express.static('public'));
 
