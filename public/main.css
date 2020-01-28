@@ -44,3 +44,15 @@ html {
     padding: 1rem;
 }
 
+.button-delete {
+    border: none;
+    background: none;
+    outline: none;
+    color: red;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.error {
+    color: red;
+}
