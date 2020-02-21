@@ -1,8 +1,4 @@
-[
-  {
-    "author": "erg",
-    "text": "erg",
-    "date": "2020-01-28T10:29:08.023Z",
-    "id": 3
-  }
-]
+[{"author":"Achi","text":"bonjour","date":"2020-01-27T15:26:27.875Z"},{"author":"Arne","text":"Was los?","date":"2020-01-27T15:26:48.334Z"}]
+const messagesText = fs.readFileSync('./messages.json', {encoding: 'utf8'});
+const messages = JSON.parse(messagesText);
+response.render('home', {messages: messages});

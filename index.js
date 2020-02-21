@@ -1,7 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
-
-const {getAllMessages, saveAllMessages, findMaxId } = require('./messages.js');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
@@ -10,40 +10,25 @@ app.set('view engine', 'handlebars');
 
 app.use(express.urlencoded({extended: true}));
 
+
 app.get('/', (request, response) => {
-    const messages = getAllMessages();
-    response.render('home', {messages: messages});
+   const articles = fs.readdirSync('./articles');
+   articles.forEach(fs.readFileSync(articles));
+   //const loadArticles = JSON.stringify(articles);
+
+    response.render('home', {articles: articles});
 });
 
 app.post('/new', (request, response) => {
-    const messages = getAllMessages();
-
-    const maxId = findMaxId(messages);
 
     messages.push({
         author: request.body.author,
         text: request.body.text,
-        date: new Date(),
-        id: maxId + 1
+        date: new Date()
     });
-
-    saveAllMessages(messages);
-
     response.redirect('/');
 });
 
-// html forms don't support method DELETE, so we unluckily have to take a POST on a path /delete
-app.post('/delete', (request, response) => {
-    let messages = getAllMessages();
-
-    const id = request.body.id;
-
-    messages = messages.filter(message => message.id != id);
-
-    saveAllMessages(messages);
-
-    response.redirect('/');
-});
 
 app.use(express.static('public'));
 
