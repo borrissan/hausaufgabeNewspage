@@ -14,11 +14,10 @@ app.use(express.urlencoded({extended: true}));
 app.get('/', (request, response) => {
    const articles = fs.readdirSync('./articles');
 
-   loadArticles = articles.forEach(function(articles){
-       fs.readFileSync(articles);
+   fs.readFileSync(articles).forEach(function(articles){
+       JSON.stringify(articles);
     });
 
-   loadArticles = JSON.stringify(articles);
 
     response.render('home', {articles: articles});
 });
