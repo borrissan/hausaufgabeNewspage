@@ -13,8 +13,12 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/', (request, response) => {
    const articles = fs.readdirSync('./articles');
-   articles.forEach(fs.readFileSync(articles));
-   //const loadArticles = JSON.stringify(articles);
+
+   loadArticles = articles.forEach(function(articles){
+       fs.readFileSync(articles);
+    });
+
+   loadArticles = JSON.stringify(articles);
 
     response.render('home', {articles: articles});
 });
